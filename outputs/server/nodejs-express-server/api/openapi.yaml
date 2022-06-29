@@ -1,0 +1,43 @@
+openapi: 3.0.0
+info:
+  description: OpenAPI Tutorial by halhorn
+  title: OpenAPI Tutorial
+  version: 0.0.0
+servers:
+- description: プロダクション API
+  url: https://example.com/api/v0
+- description: 開発用
+  url: http://{host}:{port}/api/v0
+  variables:
+    host:
+      default: localhost
+    port:
+      default: "10080"
+paths:
+  /health:
+    get:
+      description: サーバーの状態を返します。
+      operationId: openapitutorial.controller.health.call
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/get_health_response'
+          description: サーバーは正常に動作しています
+      summary: サーバーの状態を返します
+      x-eov-operation-handler: controllers/DefaultController
+components:
+  schemas:
+    get_health_response:
+      description: サーバーの状態のレスポンス
+      example:
+        status: ok
+      properties:
+        status:
+          enum:
+          - ok
+          type: string
+      required:
+      - status
+      type: object
