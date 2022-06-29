@@ -1,0 +1,31 @@
+{
+  "name": "openapi-tools",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "open:html2": "open -a '/Applications/Google Chrome.app' ./outputs/doc/html2/index.html",
+    "gen:list": "openapi-generator-cli list",
+    "gen:markdown": "openapi-generator-cli generate -i ./spec.yaml -g markdown -o ./outputs/doc/markdown",
+    "gen:html2": "openapi-generator-cli generate -i ./spec.yaml -g html2 -o ./outputs/doc/html2",
+    "gen:dynamic-html": "openapi-generator-cli generate -i ./spec.yaml -g dynamic-html -o ./outputs/doc/dynamic-html",
+    "gen:bash": "openapi-generator-cli generate -i ./spec.yaml -g bash -o ./outputs/client/bash",
+    "gen:dart": "openapi-generator-cli generate -i ./spec.yaml -g dart -o ./outputs/client/dart && cd ./outputs/client/dart && dart fix --apply",
+    "gen:typescript-axios": "openapi-generator-cli generate -i ./spec.yaml -g typescript-axios -o ./outputs/client/typescript-axios",
+    "gen:typescript-fetch": "openapi-generator-cli generate -i ./spec.yaml -g typescript-fetch -o ./outputs/client/typescript-fetch",
+    "gen:nodejs-express-server": "openapi-generator-cli generate -i ./spec.yaml -g nodejs-express-server -o ./outputs/server/nodejs-express-server",
+    "gen:csharp-netcore": "openapi-generator-cli generate -i ./spec.yaml -g csharp-netcore -o ./outputs/client/csharp-netcore",
+    "gen:csharp": "openapi-generator-cli generate -i ./spec.yaml -g csharp -o ./outputs/client/csharp",
+    "gen:clean": "rm -rf ./outputs",
+    "gen:all": "yarn run gen:markdown && yarn run gen:html2 && yarn run gen:dynamic-html && yarn run gen:dart && yarn run gen:typescript-axios && yarn run gen:typescript-fetch && yarn run gen:nodejs-express-server && yarn run gen:csharp && yarn run gen:csharp-netcore",
+    "gen:update": "yarn run replace:spec $$ yarn run gen:clean && yarn run gen:all",
+    "replace:spec": "rm -rf ./spec.yaml && cp -f \"../../api-server/champagne-openapi-spec.yaml\" \"./spec.yaml\"",
+    "replace:api-client": "bash ./scripts/replace-dart.sh"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.2.3"
+  },
+  "dependencies": {
+    "cpx": "^1.5.0"
+  }
+}
